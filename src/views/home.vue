@@ -20,7 +20,6 @@
         <t-input
           v-model="inputData.sdkAppId"
           placeholder="please input sdkAppId"
-          :format="value => Number(value)"
         />
         <t-input
           style="margin-top: 12px; margin-bottom: 18px"
@@ -37,7 +36,6 @@
 
 <script>
 import { PreConferenceView, conference, RoomEvent } from '@tencentcloud/roomkit-web-vue2.7';
-import { getBasicInfo } from '@/config/basic-info-config';
 import { isMobile } from '@tencentcloud/roomkit-web-vue2.7/es/utils/environment';
 import i18n from '../locales/index';
 import { getLanguage, getTheme } from  '../utils/utils';
@@ -64,21 +62,18 @@ export default {
         userAvatar: '',
         sdkAppId: '',
         userSig: '',
+        avatarUrl: '',
       },
       isMobile,
     };
   },
   async beforeMount() {
-    // sessionStorage.removeItem('tuiRoom-roomInfo');
-    // sessionStorage.removeItem('tuiRoom-userInfo');
-
     this.givenRoomId = this.$route.query.roomId || '';
-    this.userInfo = getBasicInfo();
+    this.userInfo = sessionStorage.getItem('tuiRoom-userInfo');
     if (!this.userInfo) {
-      this.show = true;
+      this.userInfo = this.getBasicInfo();
       return;
     }
-    sessionStorage.setItem('tuiRoom-userInfo', JSON.stringify(this.userInfo));
 
     const { sdkAppId, userId, userSig, userName, avatarUrl } = this.userInfo;
     await conference.login({ sdkAppId, userId, userSig });
@@ -110,7 +105,7 @@ export default {
         // alert('Please configure your SDKAPPID in config/basic-info-config.js');
         return;
       }
-      const generator = new LibGenerateTestUserSig(SDKAPPID, SDKSECRETKEY, EXPIRETIME);
+      const generator = new LibGenerateTestUserSig(Number(SDKAPPID), SDKSECRETKEY, EXPIRETIME);
       const userSig = generator.genTestUserSig(userInfo.userId);
       const { userId, userName, avatarUrl } = userInfo;
       return {
@@ -165,26 +160,18 @@ export default {
         this.show = true;
         return;
       }
-      console.log('=======================');
-      console.log('create rooooooommmmmm');
       this.setTUIRoomData('createRoom', roomOption);
-      console.log(roomOption);
       const roomId = await this.generateRoomId();
       sessionStorage.setItem('tuiRoom-roomId', roomId);
-      console.log(roomId);
       this.$router.push({ path: 'room', query: { roomId } });
     },
     // Processing click on [enter room]
     async handleEnterRoom(roomOption) {
-      console.log('=======================');
-      console.log(this.userInfo);
       if (!this.userInfo) {
         this.show = true;
         return;
       }
       const { roomId } = roomOption;
-      console.log('=========roomId==============');
-      console.log(roomId);
       this.setTUIRoomData('enterRoom', roomOption);
       this.$router.push({
         path: 'room',

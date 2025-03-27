@@ -6,6 +6,7 @@ const showAnalyze = process.argv.includes('--analyze');
 module.exports = defineConfig({
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   transpileDependencies: true,
+  lintOnSave: false,
   chainWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       showAnalyze && config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin);
