@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <pre-conference-view
+      class="tui-room"
       :user-info="userInfo"
       :room-id="givenRoomId"
       :enable-scheduled-conference="true"
@@ -12,22 +13,26 @@
     <t-dialog
         :header="false"
         body="这是对话框内容，对话框标题已被隐藏"
+        confirmBtn="Save"
+        cancelBtn="Cancel"
         :visible="show"
         :onClose="bodyClose"
         :onConfirm="bodyConfirm"
     >
       <div>
+        <span>SDKAppID</span>
         <t-input
           v-model="inputData.sdkAppId"
-          placeholder="please input sdkAppId"
+          placeholder="Please input SDKAppID"
         />
+        <div style="margin-top: 18px;"> SDKSecretKey</div>
         <t-input
-          style="margin-top: 12px; margin-bottom: 18px"
+          style="margin-bottom: 18px;"
           v-model="inputData.sdkSecretyKey"
-          placeholder="please input sdkSecretyKey"
+          placeholder="Please input sdkSecretyKey"
         />
       <t-alert theme="warning">
-        <template #message> The sdkSecretyKey and sdkAppId can be found in the <a href="https://console.trtc.io/overview">TRTC console↗.</a> </template>
+        <template #message> The SDKAppID and SDKSecretKey can be found in the <a href="https://console.trtc.io/overview" target="_blank">TRTC console↗</a>. See the <a href="https://trtc.io/document/35166?platform=web&product=conference#.E5.AE.A2.E6.88.B7.E7.AB.AF.E7.A4.BA.E4.BE.8B.E4.BB.A3.E7.A0.81.E8.AE.A1.E7.AE.97-UserSig" target="_blank">document↗</a> for more information. </template>
       </t-alert>
       </div>
     </t-dialog>
@@ -182,6 +187,9 @@ export default {
     },
     // Processing user clicks [Logout] in the upper left corner of the page
     handleLogOut() {
+      sessionStorage.removeItem('tuiRoom-userInfo');
+      sessionStorage.removeItem('tuiRoom-roomInfo');
+      location.reload();
       // The accessor handles the logout method
     },
     // Update userName modified by the user himself
@@ -213,3 +221,18 @@ export default {
   },
 };
 </script>
+
+<style sass scoped>
+:deep(.tui-room .schedule-room-region) {
+  display: none;
+}
+
+:deep(.tui-room #scheduleRoomContainer) {
+  display: none;
+}
+
+:deep(.tui-room .logo-container .logo) {
+  margin-bottom: 0;
+}
+
+</style>

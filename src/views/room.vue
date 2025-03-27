@@ -75,7 +75,11 @@ export default {
       conference.on(RoomEvent.USER_LOGOUT, this.backToHomeAndClearUserInfo);
       conference.on(RoomEvent.LANGUAGE_CHANGED, this.changeLanguage);
       conference.on(RoomEvent.THEME_CHANGED,  this.changeTheme);
-      await conference.login({ sdkAppId, userId, userSig });
+      try {
+        await conference.login({ sdkAppId, userId, userSig });
+      } catch (error) {
+        alert(error)
+      }
       await conference.setSelfInfo({ userName, avatarUrl });
       if (action === 'createRoom' && !hasCreated) {
         await conference.start(this.roomId, {
