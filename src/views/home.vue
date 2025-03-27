@@ -29,10 +29,10 @@
         <t-input
           style="margin-bottom: 18px;"
           v-model="inputData.sdkSecretyKey"
-          placeholder="Please input sdkSecretyKey"
+          placeholder="Please input SDKSecretKey"
         />
       <t-alert theme="warning">
-        <template #message> The SDKAppID and SDKSecretKey can be found in the <a href="https://console.trtc.io/overview" target="_blank">TRTC console↗</a>. See the <a href="https://trtc.io/document/35166?platform=web&product=conference#.E5.AE.A2.E6.88.B7.E7.AB.AF.E7.A4.BA.E4.BE.8B.E4.BB.A3.E7.A0.81.E8.AE.A1.E7.AE.97-UserSig" target="_blank">document↗</a> for more information. </template>
+        <template #message> The SDKAppID and SDKSecretKey can be found in the <a href="https://console.trtc.io/overview" target="_blank">TRTC console↗</a>. Please refer to the <a href="https://trtc.io/document/35166?platform=web&product=conference#.E5.AE.A2.E6.88.B7.E7.AB.AF.E7.A4.BA.E4.BE.8B.E4.BB.A3.E7.A0.81.E8.AE.A1.E7.AE.97-UserSig">document</a> for how to obtain it.</template>
       </t-alert>
       </div>
     </t-dialog>
