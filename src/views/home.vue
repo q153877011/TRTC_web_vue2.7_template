@@ -75,6 +75,7 @@ export default {
   async beforeMount() {
     this.givenRoomId = this.$route.query.roomId || '';
     this.userInfo = sessionStorage.getItem('tuiRoom-userInfo');
+    this.userInfo = JSON.parse(this.userInfo);
     if (!this.userInfo) {
       this.userInfo = this.getBasicInfo();
       return;
@@ -86,7 +87,6 @@ export default {
   },
   mounted() {
     const { theme } = useUIKit();
-    !theme.value && conference.setTheme(getTheme());
     conference.setLanguage(getLanguage());
     conference.on(RoomEvent.LANGUAGE_CHANGED, this.changeLanguage);
     conference.on(RoomEvent.THEME_CHANGED, this.changeTheme);
