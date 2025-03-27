@@ -20,12 +20,12 @@
         :onConfirm="bodyConfirm"
     >
       <div>
-        <span>SDKAppID</span>
+        <div style="margin-bottom: 5px;">SDKAppID</div>
         <t-input
           v-model="inputData.sdkAppId"
           placeholder="Please input SDKAppID"
         />
-        <div style="margin-top: 18px;"> SDKSecretKey</div>
+        <div style="margin-top: 18px; margin-bottom: 5px;"> SDKSecretKey</div>
         <t-input
           style="margin-bottom: 18px;"
           v-model="inputData.sdkSecretyKey"
@@ -189,6 +189,7 @@ export default {
     handleLogOut() {
       sessionStorage.removeItem('tuiRoom-userInfo');
       sessionStorage.removeItem('tuiRoom-roomInfo');
+      conference.logout();
       location.reload();
       // The accessor handles the logout method
     },
